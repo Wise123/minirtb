@@ -1,10 +1,12 @@
 package org.rtb.repository;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import org.rtb.model.Pageable;
 import org.rtb.model.Widget;
 
 public class WidgetRepository {
@@ -15,8 +17,22 @@ public class WidgetRepository {
    *
    * @return список виджетов
    */
-  public List<Widget> findAll() {
-    return widgets;
+  public Pageable<List<Widget>> findByFilters(Integer page, Integer pageSize) {
+    if (page != null && pageSize != null) {
+      return new Pageable<List<Widget>>(
+          widgets
+              .stream()
+              .sorted(Comparator.comparingInt(Widget::getZIndex))
+              .skip((long)pageSize * (long)page)
+              .limit(pageSize)
+              .collect(Collectors.toList()),
+          page,
+          pageSize,
+          widgets.hashCode()
+      );
+    } else {
+      return new Pageable<>(widgets, null, null, widgets.hashCode());
+    }
   }
 
   /**

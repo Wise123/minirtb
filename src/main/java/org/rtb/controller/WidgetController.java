@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiParam;
 
 import java.util.List;
 
+import org.rtb.model.Pageable;
 import org.rtb.model.Widget;
 import org.rtb.repository.WidgetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/widget")
 @Api(value = "test", description = "Контроллер для работы с виджетами")
@@ -27,10 +27,19 @@ public class WidgetController {
   @Autowired
   WidgetRepository widgetRepository;
 
-  @GetMapping("/")
+  //CHECKSTYLE.OFF: JavadocMethod - здесь за это отвечает сваггер
+  @GetMapping("/byFilters")
   @ApiOperation(value = "получить все виджеты")
-  public List<Widget> findAll() {
-    return widgetRepository.findAll();
+  public Pageable<List<Widget>> findByFilters(
+      //CHECKSTYLE.ON: JavadocMethod
+      @RequestParam(required = false)
+      @ApiParam(defaultValue = "0", value = "номер страницы (c нуля)")
+      Integer page,
+      @RequestParam(required = false)
+      @ApiParam(defaultValue = "10", value = "размер страницы")
+      Integer pageSize
+  ) {
+    return widgetRepository.findByFilters(page, pageSize);
   }
 
   @GetMapping("/byId/")
