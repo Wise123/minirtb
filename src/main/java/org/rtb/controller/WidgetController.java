@@ -35,22 +35,22 @@ public class WidgetController {
   public Pageable<List<Widget>> findByFilters(
       //CHECKSTYLE.ON: JavadocMethod
       @RequestParam(required = false)
-      @ApiParam(defaultValue = "0", value = "номер страницы (c нуля)")
+      @ApiParam(value = "номер страницы (c нуля)")
       Integer page,
       @RequestParam(required = false)
-      @ApiParam(defaultValue = "10", value = "размер страницы")
+      @ApiParam(value = "размер страницы")
       Integer pageSize,
       @RequestParam(required = false)
-      @ApiParam(defaultValue = "1", value = "ось x точки определяющей прямоугольник")
+      @ApiParam(value = "ось x точки определяющей прямоугольник")
       Integer point1AxisX,
       @RequestParam(required = false)
-      @ApiParam(defaultValue = "1", value = "ось y точки определяющей прямоугольник")
+      @ApiParam(value = "ось y точки определяющей прямоугольник")
       Integer point1AxisY,
       @RequestParam(required = false)
-      @ApiParam(defaultValue = "100", value = "ось x точки определяющей прямоугольник")
+      @ApiParam(value = "ось x точки определяющей прямоугольник")
       Integer point2AxisX,
       @RequestParam(required = false)
-      @ApiParam(defaultValue = "150", value = "ось y точки определяющей прямоугольник")
+      @ApiParam(value = "ось y точки определяющей прямоугольник")
       Integer point2AxisY
   ) {
     return widgetRepository
@@ -61,7 +61,7 @@ public class WidgetController {
   @ApiOperation(value = "получить виджет по идентификатору")
   public Widget findById(
       @RequestParam
-      @ApiParam(defaultValue = "20948701", value = "идентификатор виджета")
+      @ApiParam(value = "идентификатор виджета")
           Integer id) {
     return widgetRepository.findById(id);
   }
@@ -88,7 +88,7 @@ public class WidgetController {
   @ApiOperation(value = "удалить виджет")
   public Widget delete(
       @RequestParam
-      @ApiParam(defaultValue = "20948701", value = "идентификатор виджета")
+      @ApiParam(value = "идентификатор виджета")
           Integer id) {
     return widgetRepository.remove(id);
   }

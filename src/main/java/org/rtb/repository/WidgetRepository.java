@@ -1,5 +1,6 @@
 package org.rtb.repository;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -88,6 +89,7 @@ public class WidgetRepository {
    * @return созданный виджет
    */
   public Widget create(Widget widget) {
+    widget.setChangeDate(LocalDateTime.now());
     List<Integer> ids =
         widgets
         .stream()
@@ -133,6 +135,7 @@ public class WidgetRepository {
   public Widget update(Widget widget) {
     for (int i = 0; i < widgets.size(); i++) {
       if (Objects.equals(widgets.get(i).getId(), widget.getId())) {
+        widget.setChangeDate(LocalDateTime.now());
         widgets.set(i, widget);
         return findById(widget.getId());
       }
