@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
+
 @RestController
 @RequestMapping("/widget")
 @Api(value = "test", description = "Контроллер для работы с виджетами")
@@ -37,9 +39,22 @@ public class WidgetController {
       Integer page,
       @RequestParam(required = false)
       @ApiParam(defaultValue = "10", value = "размер страницы")
-      Integer pageSize
+      Integer pageSize,
+      @RequestParam(required = false)
+      @ApiParam(defaultValue = "1", value = "ось x точки определяющей прямоугольник")
+      Integer point1AxisX,
+      @RequestParam(required = false)
+      @ApiParam(defaultValue = "1", value = "ось y точки определяющей прямоугольник")
+      Integer point1AxisY,
+      @RequestParam(required = false)
+      @ApiParam(defaultValue = "100", value = "ось x точки определяющей прямоугольник")
+      Integer point2AxisX,
+      @RequestParam(required = false)
+      @ApiParam(defaultValue = "150", value = "ось y точки определяющей прямоугольник")
+      Integer point2AxisY
   ) {
-    return widgetRepository.findByFilters(page, pageSize);
+    return widgetRepository
+        .findByFilters(page, pageSize, point1AxisX, point1AxisY, point2AxisX, point2AxisY);
   }
 
   @GetMapping("/byId/")

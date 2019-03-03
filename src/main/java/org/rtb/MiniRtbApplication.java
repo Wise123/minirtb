@@ -17,7 +17,7 @@ public class MiniRtbApplication {
     WidgetRepository widgetRepository = new WidgetRepository();
 
     for (int i = 0; i < 10; i++) {
-      widgetRepository.create(new Widget(null, i, i, null));
+      widgetRepository.create(new Widget(null, i * 20, i * 20, null));
     }
 
     return widgetRepository;

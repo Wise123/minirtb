@@ -13,17 +13,48 @@ public class WidgetRepository {
   private List<Widget> widgets = new LinkedList<>();//коллекция виджетов, индекс = z
 
   /**
-   * получить все виждеты.
-   *
+   * получить список виджетов по заданным условиям.
+   * @param page текущая страница
+   * @param pageSize размер страницы
+   * @param point1XAxis x координата точки ограничивающей рабочую область(порядок не важен)
+   * @param point1YAxis y координата точки ограничивающей рабочую область(порядок не важен)
+   * @param point2XAxis x координата точки ограничивающей рабочую область(порядок не важен)
+   * @param point2YAxis y координата точки ограничивающей рабочую область(порядок не важен)
    * @return список виджетов
    */
-  public Pageable<List<Widget>> findByFilters(Integer page, Integer pageSize) {
+  public Pageable<List<Widget>> findByFilters(
+      Integer page,
+      Integer pageSize,
+      Integer point1XAxis,
+      Integer point1YAxis,
+      Integer point2XAxis,
+      Integer point2YAxis
+  ) {
+    List<Widget> filteredWidgets;
+    if (point1XAxis != null && point1YAxis != null && point2XAxis != null && point2YAxis != null) {
+      filteredWidgets = widgets
+          .stream()
+          .filter(item ->
+              ((item.getAxisX() <= point1XAxis
+              && item.getAxisX() >= point2XAxis)
+              || (item.getAxisX() >= point1XAxis
+              && item.getAxisX() <= point2XAxis))
+              &&
+              ((item.getAxisY() <= point1YAxis
+              && item.getAxisY() >= point2YAxis)
+              || (item.getAxisY() >= point1YAxis
+              && item.getAxisY() <= point2YAxis))
+          )
+          .collect(Collectors.toList());
+    } else {
+      filteredWidgets = widgets;
+    }
     if (page != null && pageSize != null) {
-      return new Pageable<List<Widget>>(
-          widgets
+      return new Pageable<>(
+          filteredWidgets
               .stream()
               .sorted(Comparator.comparingInt(Widget::getZIndex))
-              .skip((long)pageSize * (long)page)
+              .skip((long) pageSize * (long) page)
               .limit(pageSize)
               .collect(Collectors.toList()),
           page,
