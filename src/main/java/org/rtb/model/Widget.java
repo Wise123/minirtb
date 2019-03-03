@@ -6,10 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -17,12 +13,9 @@ import java.util.Set;
 @EqualsAndHashCode
 public class Widget {
   private Integer id;
-  private Integer x;
-  private Integer y;
-
-  public Widget(IndexedWidget widget){
-    this.setId(widget.getId());
-    this.setX(widget.getX());
-    this.setY(widget.getY());
-  }
+  private Integer axisX;
+  private Integer axisY;
+  //CHECKSTYLE.OFF: MemberName - иначе получится неочевидное имя переменной
+  private Integer zIndex;
+  //CHECKSTYLE.ON: MemberName
 }
